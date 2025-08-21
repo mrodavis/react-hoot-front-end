@@ -14,6 +14,14 @@ const HootDetails = (props) => {
     const newComment = await hootService.createComment(hootId, commentFormData);
     setHoot({ ...hoot, comments: [...hoot.comments, newComment] });
   };
+  const handleDeleteComment = async (commentId) => {
+    await hootService.deleteComment(hootId, commentId);
+    // call  hootService.deleteComment here!
+    setHoot({
+      ...hoot,
+      comments: hoot.comments.filter((comment) => comment._id !== commentId),
+    });
+  };
   
   useEffect(() => {
     const fetchHoot = async () => {
@@ -67,6 +75,14 @@ if (!hoot) return <main>Loading...</main>;
                 {`${comment.author.username} posted on
                 ${new Date(comment.createdAt).toLocaleDateString()}`}
               </p>
+              {comment.author._id === user._id && (
+              <>
+              <Link to={`/hoots/${hootId}/comments/${comment._id}/edit`} >Edit</Link>
+              <button onClick={() => handleDeleteComment(comment._id)}>
+                Delete Comment
+              </button>
+              </>
+              )}
             </header>
             <p>{comment.text}</p>
           </article>
