@@ -3,6 +3,7 @@ import { useParams } from 'react-router';
 
 // Import the hootService's exports
 import * as hootService from '../../services/hootService';
+import styles from './HootForm.module.css'
 
 const HootForm = (props) => {
   const { hootId } = useParams();
@@ -36,7 +37,7 @@ const handleSubmit = (evt) => {
   }, [hootId]);
 
   return (
-    <main>
+    <main className={styles.container}>
       <h1>{hootId ? 'Edit Hoot' : 'New Hoot'}</h1>
       <form onSubmit={handleSubmit}>
         <label htmlFor='title-input'>Title</label>
